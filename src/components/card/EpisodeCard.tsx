@@ -53,7 +53,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
           {episodeData?.characters?.length} personagens
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing sx={{ justifyContent: "space-around" }} >
         <Tooltip title={isFavorite(episodeData.id, favorites) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}>
           <IconButton
             onClick={() => episodeData && handleFavorite(episodeData, favorites, dispatch)}
