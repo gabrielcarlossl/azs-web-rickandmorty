@@ -22,7 +22,7 @@
   top: 0;
   left: -100%;
   transition: 850ms;
-  z-index: 1;
+  z-index: 2;
 }
 
 .nav-menu.active {
@@ -36,7 +36,7 @@
   align-items: center;
   padding: 8px 0px 8px 16px;
   list-style: none;
-  height: 60px;
+  
 }
 
 .nav-text a {
@@ -47,7 +47,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 6px 16px;
   border-radius: 4px;
   font-weight: 600;
 }
