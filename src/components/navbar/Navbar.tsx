@@ -1,10 +1,17 @@
 import React, { useRef, useEffect } from 'react'
+
+// Assets
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import logo from '../../assets/images/logo.png'
+
+// Components
 import { Link } from 'react-router-dom';
 import { Sidebar } from '../sidebar/Sidebar';
+import { Box, Tooltip } from '@mui/material';
+
+// Styles
 import './styles/Navbar.css';
-import { Tooltip } from '@mui/material';
 
 const Navbar = () => {
   const [sidebar, setSidebar] = React.useState(false);
@@ -28,6 +35,10 @@ const Navbar = () => {
     };
   }, [sidebar]);
 
+  const path = window.location.pathname;
+
+  console.log('path:', path);
+
   return (
     <React.Fragment>
       <div className="navbar">
@@ -36,6 +47,11 @@ const Navbar = () => {
             <MenuIcon sx={{ color: '#FFEB3B', fontSize: 40 }} onClick={showSidebar} />
           </Tooltip>
         </Link>
+      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        <Link to="/" className='logo'>
+          <img src={logo} alt="Logo" width={200} />
+        </Link>
+      </Box>
       </div>
       <nav
         ref={navRef}
@@ -49,16 +65,19 @@ const Navbar = () => {
               </Tooltip>
             </Link>
           </li>
-          {Sidebar.map((item, index) => {
-            return (
-              <li key={index} className={item.cName}>
-                <Link to={item.path}>
-                  {item.icon}
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {
+            Sidebar.map((item, index) => {
+              console.log('item.path:', item.path);
+              return (
+                <li key={index} className={item.cName}>
+                  <Link style={{ backgroundColor: path === item.path ? '#212121' : 'transparent' }} to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            })
+          }
         </ul>
       </nav>
     </React.Fragment>
