@@ -17,10 +17,10 @@ import type { Episode } from '../store/episodes/types';
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useAppSelector(state => state.episode);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
+  const emptySearchList = data?.results.length === 0
 
   useEffect(() => {
     dispatch(fetchEpisodesRequest(currentPage, query));
@@ -41,7 +41,7 @@ const Home = () => {
     setQuery(search);
   };
 
-    const handleClear = () => {
+  const handleClear = () => {
     setSearch('');
     setQuery('');
     setCurrentPage(1);
@@ -95,48 +95,69 @@ const Home = () => {
         </Box>
       </Box>
 
-      {!loading && !error && data?.results.length === 0 ?
-        <Typography color="error">
-          {
-            error ? error : 'Não há episódios disponíveis.'
-          }
-        </Typography>
-        : (
-          <React.Fragment>
+      {
+        !loading && !error && data?.results.length === 0 ?
+          <Typography component='p' color="error">
             {
-              loading ? <CardsLoading />
-                : <Box
-                  sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: 4,
-                    justifyContent: 'center',
-                  }}
-                >
-                  {
-                    data?.results.map((ep: Episode) => {
-                      return (
-                        <EpisodeCard
-                          key={ep.id}
-                          episodeData={ep}
-                        />
-                      )
-                    })
-                  }
-                </Box>
+              error
+                ? error
+                : emptySearchList
+                  ? (
+                    <React.Fragment>
+                      Não existe episódio com o nome
+                      <Typography
+                        component='span'
+                        style={{
+                          color: '#1976d2',
+                          fontWeight: 600,
+                          marginLeft: 4,
+                          fontStyle: 'italic',
+                          fontSize: '20px',
+                        }}
+                      >
+                        {search}
+                      </Typography>
+                    </React.Fragment>
+                  )
+                  : 'Não há episódios disponíveis.'
             }
-            <Box mt={3} display="flex" justifyContent="center">
-              <Pagination
-                count={data?.info.pages}
-                page={currentPage}
-                onChange={handlePageChange}
-                color="primary"
-                shape="rounded"
-              />
-            </Box>
-          </React.Fragment>
-        )}
-
+          </Typography>
+          : (
+            <React.Fragment>
+              {
+                loading ? <CardsLoading />
+                  : <Box
+                    sx={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: 4,
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {
+                      data?.results.map((ep: Episode) => {
+                        return (
+                          <EpisodeCard
+                            key={ep.id}
+                            episodeData={ep}
+                          />
+                        )
+                      })
+                    }
+                  </Box>
+              }
+              <Box mt={3} display="flex" justifyContent="center">
+                <Pagination
+                  count={data?.info.pages}
+                  page={currentPage}
+                  onChange={handlePageChange}
+                  color="primary"
+                  shape="rounded"
+                />
+              </Box>
+            </React.Fragment>
+          )
+      }
     </Box>
   )
 }
