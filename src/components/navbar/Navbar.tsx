@@ -65,7 +65,6 @@ const Navbar = () => {
           </li>
           {
             Sidebar.map((item, index) => {
-              console.log('item.path:', item.path);
               return (
                 <li key={index} className={item.cName}>
                   <Link
