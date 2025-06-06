@@ -12,7 +12,6 @@ function* fetchEpisodesSaga(action: FetchEpisodesAction): SagaIterator {
   try {
     const { page } = action.payload;
     const data: EpisodesResponse = yield call(fetchEpisodesService, page);
-    console.log('sagas data', data);
     yield put(fetchEpisodesSuccess(data));
   } catch (error: unknown) {
     let message = 'Erro ao buscar episódios';
