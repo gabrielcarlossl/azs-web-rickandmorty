@@ -4,6 +4,7 @@ import Navbar from './components/navbar/Navbar'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
 import React from 'react'
+import EpisodeDetails from './pages/EpisodeDetails'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/favorite-episodes' element={<Favorites />} />
+          <Route path='/details/:id' element={<EpisodeDetails />} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
