@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+// Assets
+import ClearIcon from '@mui/icons-material/Clear';
+
 // Components
-import { Box, Button, Pagination, TextField, Typography } from '@mui/material'
+import { Box, Button, IconButton, InputAdornment, Pagination, TextField, Typography } from '@mui/material'
 import EpisodeCard from '../components/card/EpisodeCard';
 import CardsLoading from '../components/loading/CardsLoading';
 
@@ -32,6 +35,12 @@ const Home = () => {
     setQuery(search);
   };
 
+    const handleClear = () => {
+    setSearch('');
+    setQuery('');
+    setCurrentPage(1);
+  };
+
   return (
     <Box p={4}>
       <Box sx={{
@@ -53,6 +62,22 @@ const Home = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             disabled={loading}
+            InputProps={{
+              endAdornment: (
+                search && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Limpar busca"
+                      onClick={handleClear}
+                      edge="end"
+                      disabled={loading}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              ),
+            }}
           />
           <Button
             disabled={loading}
