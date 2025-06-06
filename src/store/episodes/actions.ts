@@ -9,9 +9,9 @@ import {
 } from './types';
 
 // Action Creators
-export const fetchEpisodesRequest = (page: number) => ({
+export const fetchEpisodesRequest = (page: number, name: string) => ({
   type: FETCH_EPISODES_REQUEST,
-  payload: { page }
+  payload: { page, name }
 });
 
 export const fetchEpisodesSuccess = (data: EpisodesResponse) => {

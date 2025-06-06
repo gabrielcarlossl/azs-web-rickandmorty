@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Components
-import { Box, Pagination, Typography } from '@mui/material'
+import { Box, Button, Pagination, TextField, Typography } from '@mui/material'
 import EpisodeCard from '../components/card/EpisodeCard';
 import CardsLoading from '../components/loading/CardsLoading';
 
@@ -16,19 +16,53 @@ const Home = () => {
   const { data, loading, error } = useAppSelector(state => state.episode);
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('');
 
   useEffect(() => {
-    dispatch(fetchEpisodesRequest(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(fetchEpisodesRequest(currentPage, query));
+  }, [dispatch, currentPage, query]);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
+
+  const handleSearch = () => {
+    setCurrentPage(1);
+    setQuery(search);
+  };
+
   return (
     <Box p={4}>
-      <Typography variant="h4" gutterBottom>
-        Lista de Episódios
-      </Typography>
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        mb: 4,
+        flexWrap: 'wrap',
+      }}>
+        <Typography variant="h2" mb={0} gutterBottom>
+          Lista de Episódios
+        </Typography>
+
+        <Box display="flex" my={2} gap={2}>
+          <TextField
+            label="Buscar por nome"
+            variant="outlined"
+            fullWidth
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            disabled={loading}
+          />
+          <Button
+            disabled={loading}
+            variant="contained"
+            onClick={handleSearch}>
+            Buscar
+          </Button>
+        </Box>
+      </Box>
+
       {!loading && !error && data?.results.length === 0 ?
         <Typography color="error">
           {

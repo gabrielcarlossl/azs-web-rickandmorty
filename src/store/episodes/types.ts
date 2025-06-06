@@ -21,6 +21,7 @@ export interface FetchEpisodesAction {
   type: typeof FETCH_EPISODES_REQUEST;
   payload: {
     page: number;
+    name?: string;
   };
 }
 
