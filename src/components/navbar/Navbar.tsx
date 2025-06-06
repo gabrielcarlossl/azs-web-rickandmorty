@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { Link } from 'react-router-dom';
@@ -7,10 +7,26 @@ import './styles/Navbar.css';
 import { Tooltip } from '@mui/material';
 
 const Navbar = () => {
-
   const [sidebar, setSidebar] = React.useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
   const showSidebar = () => setSidebar(!sidebar);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sidebar && navRef.current && !navRef.current.contains(event.target as Node)) {
+        setSidebar(false);
+      }
+    }
+    if (sidebar) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [sidebar]);
 
   return (
     <React.Fragment>
@@ -21,7 +37,10 @@ const Navbar = () => {
           </Tooltip>
         </Link>
       </div>
-      <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+      <nav
+        ref={navRef}
+        className={sidebar ? 'nav-menu active' : 'nav-menu'}
+      >
         <ul className='nav-menu-items' onClick={showSidebar}>
           <li className='navbar-toggle'>
             <Link to="#" className='menu-bars'>
