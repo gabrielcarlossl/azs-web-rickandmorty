@@ -9,10 +9,11 @@ import {
   FETCH_EPISODE_BY_ID_FAILURE,
   type EpisodeByIdActions,
   type EpisodesActions,
-  type Episode
+  type Episode,
+  type EpisodesState
 } from './types';
 
-const initialState = {
+const initialState: EpisodesState = {
   data: null,
   loading: false,
   error: null,

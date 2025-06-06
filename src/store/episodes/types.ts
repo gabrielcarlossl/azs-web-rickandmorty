@@ -30,6 +30,8 @@ export interface EpisodeDetails {
   air_date: string;
   episode: string;
   characters: CharacterDetails[];
+  loading: false,
+  error: null
 }
 
 export interface FetchEpisodeByIdRequestAction {
@@ -92,4 +94,9 @@ export interface EpisodesState {
   loading: boolean;
   error: string | null;
   favorites: Episode[];
+  episodeDetails: {
+    data: null,
+    loading: false,
+    error: null
+  }
 }
