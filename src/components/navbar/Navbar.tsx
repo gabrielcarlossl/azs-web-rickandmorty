@@ -37,8 +37,6 @@ const Navbar = () => {
 
   const path = window.location.pathname;
 
-  console.log('path:', path);
-
   return (
     <React.Fragment>
       <div className="navbar">
@@ -70,7 +68,10 @@ const Navbar = () => {
               console.log('item.path:', item.path);
               return (
                 <li key={index} className={item.cName}>
-                  <Link style={{ backgroundColor: path === item.path ? '#212121' : 'transparent' }} to={item.path}>
+                  <Link
+                    style={path === item.path ? { backgroundColor: '#212121' } : {}}
+                    to={item.path}
+                  >
                     {item.icon}
                     <span>{item.title}</span>
                   </Link>
