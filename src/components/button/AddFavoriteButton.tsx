@@ -7,7 +7,7 @@ import type { Episode } from '../../store/episodes/types';
 import { useDispatch } from 'react-redux';
 
 type AddFavoriteButtonProps = {
-  episodeData: Episode
+  episodeData: Episode 
   favorites: Episode[]
 }
 
