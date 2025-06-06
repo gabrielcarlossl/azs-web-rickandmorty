@@ -2,13 +2,56 @@
 export const FETCH_EPISODES_REQUEST = 'FETCH_EPISODES_REQUEST';
 export const FETCH_EPISODES_SUCCESS = 'FETCH_EPISODES_SUCCESS';
 export const FETCH_EPISODES_FAILURE = 'FETCH_EPISODES_FAILURE';
+
 export const ADD_FAVORITE_EPISODE = 'ADD_FAVORITE_EPISODE';
 export const REMOVE_FAVORITE_EPISODE = 'REMOVE_FAVORITE_EPISODE';
+
+// Episode by ID
+export const FETCH_EPISODE_BY_ID_REQUEST = 'FETCH_EPISODE_BY_ID_REQUEST';
+export const FETCH_EPISODE_BY_ID_SUCCESS = 'FETCH_EPISODE_BY_ID_SUCCESS';
+export const FETCH_EPISODE_BY_ID_FAILURE = 'FETCH_EPISODE_BY_ID_FAILURE';
 
 // Payload Types
 export interface FetchEpisodesPayload {
   page: number;
 }
+
+export interface CharacterDetails {
+  id: string;
+  name: string;
+  status: string;
+  species: string;
+  image: string;
+}
+
+export interface EpisodeDetails {
+  id: string;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: CharacterDetails[];
+}
+
+export interface FetchEpisodeByIdRequestAction {
+  type: typeof FETCH_EPISODE_BY_ID_REQUEST;
+  payload: { id: string };
+}
+
+export interface FetchEpisodeByIdSuccessAction {
+  type: typeof FETCH_EPISODE_BY_ID_SUCCESS;
+  payload: EpisodeDetails;
+}
+
+export interface FetchEpisodeByIdFailureAction {
+  type: typeof FETCH_EPISODE_BY_ID_FAILURE;
+  payload: string;
+}
+
+export type EpisodeByIdActions =
+  | FetchEpisodeByIdRequestAction
+  | FetchEpisodeByIdSuccessAction
+  | FetchEpisodeByIdFailureAction;
+
 export type EpisodesActions =
   | FetchEpisodesAction
   | { type: typeof FETCH_EPISODES_SUCCESS; payload: EpisodesResponse }

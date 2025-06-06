@@ -4,6 +4,10 @@ import {
   FETCH_EPISODES_FAILURE,
   ADD_FAVORITE_EPISODE,
   REMOVE_FAVORITE_EPISODE,
+  FETCH_EPISODE_BY_ID_REQUEST,
+  FETCH_EPISODE_BY_ID_SUCCESS,
+  FETCH_EPISODE_BY_ID_FAILURE,
+  type EpisodeByIdActions,
   type EpisodesActions,
   type Episode
 } from './types';
@@ -12,10 +16,15 @@ const initialState = {
   data: null,
   loading: false,
   error: null,
-  favorites: []
+  favorites: [],
+  episodeDetails: {
+    data: null,
+    loading: false,
+    error: null
+  }
 };
 
-const EpisodesReducer = (state = initialState, action: EpisodesActions) => {
+const EpisodesReducer = (state = initialState, action: EpisodesActions | EpisodeByIdActions) => {
   switch (action.type) {
     case FETCH_EPISODES_REQUEST:
       return {
@@ -47,6 +56,33 @@ const EpisodesReducer = (state = initialState, action: EpisodesActions) => {
       return {
         ...state,
         favorites: state.favorites.filter((ep: Episode) => ep.id !== action.payload)
+      };
+    case FETCH_EPISODE_BY_ID_REQUEST:
+      return {
+        ...state,
+        episodeDetails: {
+          data: null,
+          loading: true,
+          error: null
+        }
+      };
+    case FETCH_EPISODE_BY_ID_SUCCESS:
+      return {
+        ...state,
+        episodeDetails: {
+          data: action.payload,
+          loading: false,
+          error: null
+        }
+      };
+    case FETCH_EPISODE_BY_ID_FAILURE:
+      return {
+        ...state,
+        episodeDetails: {
+          data: null,
+          loading: false,
+          error: action.payload
+        }
       };
     default:
       return state;

@@ -1,10 +1,12 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { fetchEpisodesService } from './services';
+import { fetchEpisodeByIdService, fetchEpisodesService } from './services';
 import {
   fetchEpisodesSuccess,
-  fetchEpisodesFailure
+  fetchEpisodesFailure,
+  fetchEpisodeByIdSuccess,
+  fetchEpisodeByIdFailure
 } from './actions';
-import { FETCH_EPISODES_REQUEST, type EpisodesResponse, type FetchEpisodesAction } from './types';
+import { FETCH_EPISODE_BY_ID_REQUEST, FETCH_EPISODES_REQUEST, type EpisodesResponse, type FetchEpisodeByIdRequestAction, type FetchEpisodesAction } from './types';
 
 import type { SagaIterator } from 'redux-saga';
 
@@ -22,6 +24,18 @@ function* fetchEpisodesSaga(action: FetchEpisodesAction): SagaIterator {
   }
 }
 
+function* fetchEpisodeByIdSaga(action: FetchEpisodeByIdRequestAction): SagaIterator {
+  try {
+    const { id } = action.payload;
+    const data = yield call(fetchEpisodeByIdService, id);
+    yield put(fetchEpisodeByIdSuccess(data));
+  } catch (error: any) {
+    yield put(fetchEpisodeByIdFailure(error?.message || 'Erro ao buscar episódio'));
+  }
+}
+
+
 export default function* EpisodesSaga() {
   yield takeLatest(FETCH_EPISODES_REQUEST, fetchEpisodesSaga);
+  yield takeLatest(FETCH_EPISODE_BY_ID_REQUEST, fetchEpisodeByIdSaga);
 }

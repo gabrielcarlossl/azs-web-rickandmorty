@@ -5,7 +5,11 @@ import {
   ADD_FAVORITE_EPISODE,
   REMOVE_FAVORITE_EPISODE,
   type EpisodesResponse,
-  type Episode
+  type Episode,
+  FETCH_EPISODE_BY_ID_REQUEST,
+  FETCH_EPISODE_BY_ID_SUCCESS,
+  FETCH_EPISODE_BY_ID_FAILURE,
+  type EpisodeDetails
 } from './types';
 
 // Action Creators
@@ -35,4 +39,19 @@ export const addFavoriteEpisode = (episode: Episode) => ({
 export const removeFavoriteEpisode = (id: string) => ({
   type: REMOVE_FAVORITE_EPISODE,
   payload: id
+});
+
+export const fetchEpisodeByIdRequest = (id: string) => ({
+  type: FETCH_EPISODE_BY_ID_REQUEST,
+  payload: { id }
+});
+
+export const fetchEpisodeByIdSuccess = (data: EpisodeDetails) => ({
+  type: FETCH_EPISODE_BY_ID_SUCCESS,
+  payload: data
+});
+
+export const fetchEpisodeByIdFailure = (error: string) => ({
+  type: FETCH_EPISODE_BY_ID_FAILURE,
+  payload: error
 });
