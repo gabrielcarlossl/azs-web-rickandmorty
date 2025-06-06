@@ -2,20 +2,19 @@ import { combineReducers } from 'redux'
 import { all } from 'redux-saga/effects'
 
 // Reducers
-
+import EpisodesReducer from './episodes/reducer';
 
 // Sagas
+import EpisodesSaga from './episodes/sagas';
 
 export function * rootSaga () {
   yield all([
-
+    EpisodesSaga()
   ])
 }
 
-const Reducer = (state = {}, action: any) => state;
-
 export const appReducer = combineReducers({
-  appStore: Reducer
+  episode: EpisodesReducer
 })
 
 const rootReducer = (state: any, action: any) => {
