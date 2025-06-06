@@ -2,8 +2,6 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Assets
-import StarIcon from '@mui/icons-material/Star'
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
@@ -19,10 +17,9 @@ import { Button, Tooltip } from '@mui/material';
 // Redux
 import { useAppSelector } from '../../store/configureStore';
 import type { Episode } from '../../store/episodes/types';
-import { useDispatch } from 'react-redux';
 
 // Utils
-import { handleFavorite, isFavorite } from '../../utils/functions';
+import AddFavoriteButton from '../button/AddFavoriteButton';
 
 type EpisodeCardProps = {
   episodeData: Episode;
@@ -32,7 +29,6 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
   episodeData
 }) => {
   const { favorites } = useAppSelector(state => state.episode);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [copied, setCopied] = React.useState(false);
 
@@ -64,19 +60,7 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: "space-around" }} >
-        <Tooltip title={isFavorite(episodeData.id, favorites) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}>
-          <IconButton
-            onClick={() => episodeData && handleFavorite(episodeData, favorites, dispatch)}
-            aria-label="add to favorites"
-            disabled={!episodeData}
-          >
-            {
-              episodeData && isFavorite(episodeData.id, favorites)
-                ? <StarIcon color="warning" />
-                : <StarBorderIcon />
-            }
-          </IconButton>
-        </Tooltip>
+        <AddFavoriteButton episodeData={episodeData} favorites={favorites} />
         <Tooltip title={copied ? "Link copiado!" : "Compartilhar"}>
           <IconButton aria-label="share" onClick={handleShare}>
             <ShareIcon />

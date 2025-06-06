@@ -1,13 +1,20 @@
-import { Box, List, ListItem, ListItemText, Paper, Typography, IconButton } from '@mui/material'
-import { useAppSelector } from '../store/configureStore'
-import { useDispatch } from 'react-redux'
-import { removeFavoriteEpisode } from '../store/episodes/actions'
-import StarIcon from '@mui/icons-material/Star'
-import type { Episode } from '../store/episodes/types'
+// Components
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography
+} from '@mui/material'
 import BackButton from '../components/button/BackButton'
+import AddFavoriteButton from '../components/button/AddFavoriteButton'
+
+// Redux
+import { useAppSelector } from '../store/configureStore'
+import type { Episode } from '../store/episodes/types'
 
 const Favorites = () => {
-  const dispatch = useDispatch()
   const favorites = useAppSelector(state => state.episode.favorites)
 
   return (
@@ -22,20 +29,16 @@ const Favorites = () => {
       </Typography>
       {
         favorites.length === 0 ? (
-          <Typography>Nenhum episódio favoritado.</Typography>
+          <Typography>
+            Nenhum episódio favoritado.
+          </Typography>
         ) : (
           <List component={Paper} elevation={3}>
             {
               favorites.map((ep: Episode) => (
                 <ListItem key={ep.id} divider
                   secondaryAction={
-                    <IconButton
-                      edge="end"
-                      onClick={() => dispatch(removeFavoriteEpisode(ep.id))}
-                      aria-label="unfavorite"
-                    >
-                      <StarIcon color="warning" />
-                    </IconButton>
+                    <AddFavoriteButton episodeData={ep} favorites={favorites} />
                   }
                 >
                   <ListItemText
