@@ -1,19 +1,28 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// Assets
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import ShareIcon from '@mui/icons-material/Share';
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+
+// Components
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import StarIcon from '@mui/icons-material/Star'
-import ShareIcon from '@mui/icons-material/Share';
 import { Button, Tooltip } from '@mui/material';
+
+// Redux
 import { useAppSelector } from '../../store/configureStore';
 import type { Episode } from '../../store/episodes/types';
 import { useDispatch } from 'react-redux';
-import { addFavoriteEpisode, removeFavoriteEpisode } from '../../store/episodes/actions';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+
+// Utils
+import { handleFavorite, isFavorite } from '../../utils/functions';
 
 type EpisodeCardProps = {
   episodeData: Episode;
@@ -22,21 +31,12 @@ type EpisodeCardProps = {
 const EpisodeCard: React.FC<EpisodeCardProps> = ({
   episodeData
 }) => {
-  const [seeMore, setSeeMore] = React.useState(false);
   const { favorites } = useAppSelector(state => state.episode);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSeeMore = () => {
-    setSeeMore(!seeMore);
-  };
-  const isFavorite = (id: string) => favorites?.some((ep: Episode) => ep.id === id);
-
-  const handleFavorite = (ep: Episode) => {
-    if (isFavorite(ep.id)) {
-      dispatch(removeFavoriteEpisode(ep.id));
-    } else {
-      dispatch(addFavoriteEpisode(ep));
-    }
+    navigate(`/details/${episodeData.id}`);
   };
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -54,13 +54,13 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Tooltip title={isFavorite(episodeData.id) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}>
+        <Tooltip title={isFavorite(episodeData.id, favorites) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}>
           <IconButton
-            onClick={() => episodeData && handleFavorite(episodeData)}
+            onClick={() => episodeData && handleFavorite(episodeData, favorites, dispatch)}
             aria-label="add to favorites"
             disabled={!episodeData}
           >
-            {episodeData && isFavorite(episodeData.id) ? <StarIcon color="warning" /> : <StarBorderIcon />}
+            {episodeData && isFavorite(episodeData.id, favorites) ? <StarIcon color="warning" /> : <StarBorderIcon />}
           </IconButton>
         </Tooltip>
         <Tooltip title="Compartilhar">
@@ -72,13 +72,11 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
           variant="outlined"
           size="small"
           onClick={handleSeeMore}
-          aria-expanded={seeMore}
           aria-label="show more"
         >
           Ver mais
         </Button>
       </CardActions>
-
     </Card>
   )
 }
