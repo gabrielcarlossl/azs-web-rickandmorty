@@ -1,5 +1,11 @@
-import { Box, CircularProgress, List, ListItem, ListItemText, Pagination, Paper, Typography } from '@mui/material'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+// Components
+import { Box, Pagination, Typography } from '@mui/material'
+import EpisodeCard from '../components/card/EpisodeCard';
+import CardsLoading from '../components/loading/CardsLoading';
+
+// Redux
 import { useDispatch } from 'react-redux';
 import { fetchEpisodesRequest } from '../store/episodes/actions';
 import { useAppSelector } from '../store/configureStore';
@@ -23,35 +29,48 @@ const Home = () => {
       <Typography variant="h4" gutterBottom>
         Lista de Episódios
       </Typography>
+      {!loading && !error && data?.results.length === 0 ?
+        <Typography color="error">
+          {
+            error ? error : 'Não há episódios disponíveis.'
+          }
+        </Typography>
+        : (
+          <React.Fragment>
+            {
+              loading ? <CardsLoading />
+                : <Box
+                  sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 4,
+                    justifyContent: 'center',
+                  }}
+                >
+                  {
+                    data?.results.map((ep: Episode) => {
+                      return (
+                        <EpisodeCard
+                          key={ep.id}
+                          episodeData={ep}
+                        />
+                      )
+                    })
+                  }
+                </Box>
+            }
+            <Box mt={3} display="flex" justifyContent="center">
+              <Pagination
+                count={data?.info.pages}
+                page={currentPage}
+                onChange={handlePageChange}
+                color="primary"
+                shape="rounded"
+              />
+            </Box>
+          </React.Fragment>
+        )}
 
-      {loading && <CircularProgress />}
-
-      {error && <Typography color="error">{error}</Typography>}
-
-      {data && (
-        <>
-          <List component={Paper} elevation={3}>
-            {data.results.map((ep: Episode) => (
-              <ListItem key={ep.id} divider>
-                <ListItemText
-                  primary={`${ep.episode} - ${ep.name}`}
-                  secondary={`Data de exibição: ${ep.air_date} | ${ep.characters.length} personagens`}
-                />
-              </ListItem>
-            ))}
-          </List>
-
-          <Box mt={3} display="flex" justifyContent="center">
-            <Pagination
-              count={data.info.pages}
-              page={currentPage}
-              onChange={handlePageChange}
-              color="primary"
-              shape="rounded"
-            />
-          </Box>
-        </>
-      )}
     </Box>
   )
 }
