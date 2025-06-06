@@ -30,6 +30,12 @@ const Home = () => {
     setCurrentPage(value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const handleSearch = () => {
     setCurrentPage(1);
     setQuery(search);
@@ -61,6 +67,7 @@ const Home = () => {
             fullWidth
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKeyDown}
             disabled={loading}
             InputProps={{
               endAdornment: (
