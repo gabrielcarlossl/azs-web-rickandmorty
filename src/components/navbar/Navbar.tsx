@@ -4,6 +4,7 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { Link } from 'react-router-dom';
 import { Sidebar } from '../sidebar/Sidebar';
 import './styles/Navbar.css';
+import { Tooltip } from '@mui/material';
 
 const Navbar = () => {
 
@@ -15,14 +16,18 @@ const Navbar = () => {
     <React.Fragment>
       <div className="navbar">
         <Link to="#" className='menu-bars'>
-          <MenuIcon sx={{ color: '#FFEB3B'}} onClick={showSidebar} />
+          <Tooltip title="Menu" placement="right">
+            <MenuIcon sx={{ color: '#FFEB3B', fontSize: 40 }} onClick={showSidebar} />
+          </Tooltip>
         </Link>
       </div>
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
         <ul className='nav-menu-items' onClick={showSidebar}>
           <li className='navbar-toggle'>
             <Link to="#" className='menu-bars'>
-              <MenuOpenIcon sx={{ color: '#FFEB3B'}} />
+              <Tooltip title="Fechar Menu" placement="right">
+                <MenuOpenIcon sx={{ color: '#FFEB3B', fontSize: 40 }} />
+              </Tooltip>
             </Link>
           </li>
           {Sidebar.map((item, index) => {
