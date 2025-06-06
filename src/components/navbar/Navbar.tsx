@@ -8,7 +8,10 @@ import logo from '../../assets/images/logo.png'
 // Components
 import { Link } from 'react-router-dom';
 import { Sidebar } from '../sidebar/Sidebar';
-import { Box, Tooltip } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
+
+// Hooks
+import { useLatestGithubTag } from '../../hooks/useLatestGitHubTag';
 
 // Styles
 import './styles/Navbar.css';
@@ -16,8 +19,9 @@ import './styles/Navbar.css';
 const Navbar = () => {
   const [sidebar, setSidebar] = React.useState(false);
   const navRef = useRef<HTMLDivElement>(null);
-
   const showSidebar = () => setSidebar(!sidebar);
+  const latestTag = useLatestGithubTag('gabrielcarlossl', 'azs-web-rickandmorty');
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -45,11 +49,11 @@ const Navbar = () => {
             <MenuIcon sx={{ color: '#FFEB3B', fontSize: 40 }} onClick={showSidebar} />
           </Tooltip>
         </Link>
-      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-        <Link to="/" className='logo'>
-          <img src={logo} alt="Logo" width={200} />
-        </Link>
-      </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Link to="/" className='logo'>
+            <img src={logo} alt="Logo" width={200} />
+          </Link>
+        </Box>
       </div>
       <nav
         ref={navRef}
@@ -79,6 +83,18 @@ const Navbar = () => {
             })
           }
         </ul>
+        {
+          latestTag ? (
+            <span style={{ color: '#FFEB3B', fontWeight: 600, marginLeft: 16 }}>
+              Versão: {latestTag}
+            </span>
+          ) : <Typography
+            textAlign='center'
+            color='#FFEB3B'
+          >
+            Carregando versão...
+          </Typography>
+        }
       </nav>
     </React.Fragment>
   )
