@@ -4,6 +4,8 @@ import Navbar from './components/navbar/Navbar'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
 import React from 'react'
+import EpisodeDetails from './pages/EpisodeDetails'
+import { Box } from '@mui/material'
 
 function App() {
 
@@ -11,10 +13,13 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/favorite-episodes' element={<Favorites />} />
-        </Routes>
+        <Box pt='82px'>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/favorite-episodes' element={<Favorites />} />
+            <Route path='/details/:id' element={<EpisodeDetails />} />
+          </Routes>
+        </Box>
       </BrowserRouter>
     </React.Fragment>
   )

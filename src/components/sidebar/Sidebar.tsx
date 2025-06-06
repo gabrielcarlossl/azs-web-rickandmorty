@@ -2,15 +2,15 @@ import HomeIcon from '@mui/icons-material/Home';
 import StarIcon from '@mui/icons-material/Star';
 export const Sidebar = [
   {
-    title: 'Home',
+    title: 'Episódios',
     path: '/',
-    icon: <HomeIcon />,
+    icon: <HomeIcon sx={{fontSize: 40}} />,
     cName: 'nav-text'
   },
   {
-    title: 'Episódios Favoritos',
+    title: 'Favoritos',
     path: '/favorite-episodes',
-    icon: <StarIcon />,
+    icon: <StarIcon sx={{fontSize: 40}} />,
     cName: 'nav-text'
   }
 ]
