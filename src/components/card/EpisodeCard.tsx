@@ -34,10 +34,20 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
   const { favorites } = useAppSelector(state => state.episode);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [copied, setCopied] = React.useState(false);
 
   const handleSeeMore = () => {
     navigate(`/details/${episodeData.id}`);
   };
+
+  const handleShare = () => {
+    const url = `${window?.location?.origin}/details/${episodeData.id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -60,11 +70,15 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
             aria-label="add to favorites"
             disabled={!episodeData}
           >
-            {episodeData && isFavorite(episodeData.id, favorites) ? <StarIcon color="warning" /> : <StarBorderIcon />}
+            {
+              episodeData && isFavorite(episodeData.id, favorites)
+                ? <StarIcon color="warning" />
+                : <StarBorderIcon />
+            }
           </IconButton>
         </Tooltip>
-        <Tooltip title="Compartilhar">
-          <IconButton aria-label="share">
+        <Tooltip title={copied ? "Link copiado!" : "Compartilhar"}>
+          <IconButton aria-label="share" onClick={handleShare}>
             <ShareIcon />
           </IconButton>
         </Tooltip>
