@@ -1,3 +1,5 @@
+import React from 'react'
+
 // Components
 import {
   Box,
@@ -9,13 +11,14 @@ import {
 } from '@mui/material'
 import BackButton from '../components/button/BackButton'
 import AddFavoriteButton from '../components/button/AddFavoriteButton'
+import WatchedButton from '../components/button/WatchedButton'
 
 // Redux
 import { useAppSelector } from '../store/configureStore'
 import type { Episode } from '../store/episodes/types'
 
 const Favorites = () => {
-  const favorites = useAppSelector(state => state.episode.favorites)
+  const { favorites, watched } = useAppSelector(state => state.episode)
 
   return (
     <Box p={4}>
@@ -38,7 +41,10 @@ const Favorites = () => {
               favorites.map((ep: Episode) => (
                 <ListItem key={ep.id} divider
                   secondaryAction={
-                    <AddFavoriteButton episodeData={ep} favorites={favorites} />
+                    <React.Fragment>
+                      <AddFavoriteButton episodeData={ep} favorites={favorites} />
+                      <WatchedButton episodeData={ep} watched={watched} />
+                    </React.Fragment>
                   }
                 >
                   <ListItemText
