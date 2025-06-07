@@ -11,7 +11,8 @@ import { Sidebar } from '../sidebar/Sidebar';
 import {
   Box,
   Tooltip,
-  IconButton
+  IconButton,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -76,7 +77,7 @@ const NavText = styled('li')({
   listStyle: 'none',
   '& a': {
     textDecoration: 'none',
-    color: '#00B9AE',
+    color: '#F9F9F9',
     fontSize: 24,
     width: '95%',
     height: '100%',
@@ -151,17 +152,32 @@ const Navbar = () => {
                 </Tooltip>
               </MenuBars>
             </NavbarToggle>
-            {Sidebar.map((item, index) => (
-              <NavText key={index} className={item.cName}>
-                <Link
-                  style={path === item.path ? { backgroundColor: '#212121' } : {}}
-                  to={item.path}
-                >
-                  {item.icon}
-                  <span style={{ marginLeft: 16 }}>{item.title}</span>
-                </Link>
-              </NavText>
-            ))}
+            {
+              Sidebar.map((item, index) => (
+                <NavText key={index} className={item.cName}>
+                  <Link
+                    style={
+                      path === item.path ? { backgroundColor: '#3D4345', color: '#00B9AE' } : {}
+
+                    }
+                    to={item.path}
+                  >
+                    {item.icon}
+                    <Typography
+                      component='span'
+                      ml={2}
+                      fontWeight={600}
+                      fontSize={22}
+                      sx={
+                        path === item.path ? { color: '#00B9AE' } : { color: '#F9F9F9' }
+                      }
+                    >
+                      {item.title}
+                    </Typography>
+                  </Link>
+                </NavText>
+              ))
+            }
           </NavMenuItems>
           {latestTag ? (
             <VersionSpan>

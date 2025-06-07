@@ -187,7 +187,7 @@ const Home = () => {
                       color: '#F9F9F9 !important',
                     },
                     '.Mui-selected':{
-                      background: '#00B9AE'
+                      background: '#00B9AE !important',
                     }
                   }}
                   count={data?.info.pages}
