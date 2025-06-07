@@ -65,7 +65,7 @@ const Home = () => {
           alignItems: 'center',
           gap: 2,
           '.MuiBadge-badge': {
-            background: '#00B9AE'           
+            background: '#00B9AE'
           }
         }}
         >
@@ -74,13 +74,25 @@ const Home = () => {
           </PageTitle>
           <Tooltip title="Episódios vistos">
             <Badge badgeContent={watched?.length ?? 0} color="primary">
-              <LiveTvIcon sx={{fontSize: '30px'}} />
+              <LiveTvIcon sx={{ fontSize: '30px' }} />
             </Badge>
           </Tooltip>
         </Box>
 
         <Box display="flex" my={2} gap={2}>
           <TextField
+          sx={{
+            background: '#3D4345',
+            borderRadius: '10px',
+            '.MuiFormLabel-root': {
+              color: '#F9F9F9 !important',
+            },
+            'input': {
+              color: '#F9F9F9 !important',
+            },
+            outline: 'none'
+
+          }}
             label="Buscar por nome"
             variant="outlined"
             fullWidth
@@ -167,8 +179,17 @@ const Home = () => {
                     }
                   </Box>
               }
-              <Box mt={3} display="flex" justifyContent="center">
+              <Box
+                mt={3} display="flex" justifyContent="center">
                 <Pagination
+                  sx={{
+                    '.MuiPaginationItem-root': {
+                      color: '#F9F9F9 !important',
+                    },
+                    '.Mui-selected':{
+                      background: '#00B9AE'
+                    }
+                  }}
                   count={data?.info.pages}
                   page={currentPage}
                   onChange={handlePageChange}
