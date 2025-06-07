@@ -4,8 +4,8 @@ import Tooltip from '@mui/material/Tooltip';
 import type { Episode } from '../../store/episodes/types';
 import { useDispatch } from 'react-redux';
 import { handleWatched, isWatched } from '../../utils/functions';
-import RemoveFromQueueIcon from '@mui/icons-material/RemoveFromQueue';
-import QueuePlayNextIcon from '@mui/icons-material/QueuePlayNext';
+import LiveTvRoundedIcon from '@mui/icons-material/LiveTvRounded';
+import QueuePlayNextRoundedIcon from '@mui/icons-material/QueuePlayNextRounded';
 
 type WatchedButtonProps = {
   episodeData: Episode;
@@ -20,10 +20,10 @@ const WatchedButton: React.FC<WatchedButtonProps> = ({ episodeData, watched }) =
     <Tooltip title={watchedStatus ? "Desmarcar como visto" : "Marcar como visto"}>
       <IconButton
         aria-label="watched"
-        color={watchedStatus ? "success" : "default"}
+        sx={watchedStatus ? { color: "#00B9AE" } : undefined}
         onClick={() => handleWatched(episodeData, watched, dispatch)}
       >
-        {watchedStatus ? <RemoveFromQueueIcon /> : <QueuePlayNextIcon />}
+        {watchedStatus ? <LiveTvRoundedIcon /> : <QueuePlayNextRoundedIcon />}
       </IconButton>
     </Tooltip>
   );
