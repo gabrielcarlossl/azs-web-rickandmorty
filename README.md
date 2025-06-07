@@ -44,3 +44,10 @@ Lista de personagens com:
 - Material UI
 
 - Integração com a [Rick and Morty API](https://rickandmortyapi.com)
+
+
+#### Melhorias
+
+- Criação de tela de login utilizando autenticação com JSON Server API
+- Adição de Comentários na exibição de detalhes de episódio
+- Adição de avaliação de episódio
