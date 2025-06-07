@@ -6,6 +6,9 @@ export const FETCH_EPISODES_FAILURE = 'FETCH_EPISODES_FAILURE';
 export const ADD_FAVORITE_EPISODE = 'ADD_FAVORITE_EPISODE';
 export const REMOVE_FAVORITE_EPISODE = 'REMOVE_FAVORITE_EPISODE';
 
+export const ADD_WATCHED_EPISODE = 'ADD_WATCHED_EPISODE';
+export const REMOVE_WATCHED_EPISODE = 'REMOVE_WATCHED_EPISODE';
+
 // Episode by ID
 export const FETCH_EPISODE_BY_ID_REQUEST = 'FETCH_EPISODE_BY_ID_REQUEST';
 export const FETCH_EPISODE_BY_ID_SUCCESS = 'FETCH_EPISODE_BY_ID_SUCCESS';
@@ -59,7 +62,9 @@ export type EpisodesActions =
   | { type: typeof FETCH_EPISODES_SUCCESS; payload: EpisodesResponse }
   | { type: typeof FETCH_EPISODES_FAILURE; payload: string }
   | { type: typeof ADD_FAVORITE_EPISODE; payload: Episode }
-  | { type: typeof REMOVE_FAVORITE_EPISODE; payload: string };
+  | { type: typeof REMOVE_FAVORITE_EPISODE; payload: string }
+  | { type: typeof ADD_WATCHED_EPISODE; payload: Episode }
+  | { type: typeof REMOVE_WATCHED_EPISODE; payload: string };
 
 // Sagas Types
 export interface FetchEpisodesAction {
@@ -94,6 +99,7 @@ export interface EpisodesState {
   loading: boolean;
   error: string | null;
   favorites: Episode[];
+  watched: Episode[];
   episodeDetails: {
     data: null,
     loading: false,
