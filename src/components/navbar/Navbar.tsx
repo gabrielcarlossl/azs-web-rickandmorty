@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 
 // Assets
 import MenuIcon from '@mui/icons-material/Menu';
@@ -17,7 +17,7 @@ import { useLatestGithubTag } from '../../hooks/useLatestGitHubTag';
 import './styles/Navbar.css';
 
 const Navbar = () => {
-  const [sidebar, setSidebar] = React.useState(false);
+  const [sidebar, setSidebar] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const showSidebar = () => setSidebar(!sidebar);
   const latestTag = useLatestGithubTag('gabrielcarlossl', 'azs-web-rickandmorty');

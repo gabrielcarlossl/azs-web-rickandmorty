@@ -5,21 +5,20 @@ import { useParams } from 'react-router-dom';
 import {
   Paper,
   Typography,
-  Avatar,
   Box,
   LinearProgress,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import BackButton from '../components/button/BackButton';
+import AddFavoriteButton from '../components/button/AddFavoriteButton';
+import WatchedButton from '../components/button/WatchedButton';
+import CharacterCard from '../components/card/CharacterCard';
 
 // Redux
 import { useAppSelector } from '../store/configureStore';
 import { useDispatch } from 'react-redux';
 import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
 
-// Utils
-import AddFavoriteButton from '../components/button/AddFavoriteButton';
-import WatchedButton from '../components/button/WatchedButton';
 
 const EpisodeDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -82,25 +81,7 @@ const EpisodeDetails = () => {
                       }}
                       key={char.id}
                     >
-                      <Paper
-                        sx={{
-                          p: 2,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 2
-                        }}
-                      >
-                        <Avatar
-                          src={char.image}
-                          alt={`Imagem do personagem ${char.name}`}
-                          sx={{ width: 64, height: 64 }}
-                        />
-                        <Box>
-                          <Typography variant="subtitle1">{char.name}</Typography>
-                          <Typography variant="body2">Espécie: {char.species}</Typography>
-                          <Typography variant="body2">Status: {char.status}</Typography>
-                        </Box>
-                      </Paper>
+                      <CharacterCard characters={char} />
                     </Grid>
                   ))
                 }
