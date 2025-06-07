@@ -12,7 +12,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { Button, Tooltip } from '@mui/material';
+import { Box, Button, Tooltip } from '@mui/material';
 
 // Redux
 import { useAppSelector } from '../../store/configureStore';
@@ -20,6 +20,7 @@ import type { Episode } from '../../store/episodes/types';
 
 // Utils
 import AddFavoriteButton from '../button/AddFavoriteButton';
+import WatchedButton from '../button/WatchedButton';
 
 type EpisodeCardProps = {
   episodeData: Episode;
@@ -28,7 +29,7 @@ type EpisodeCardProps = {
 const EpisodeCard: React.FC<EpisodeCardProps> = ({
   episodeData
 }) => {
-  const { favorites } = useAppSelector(state => state.episode);
+  const { favorites, watched } = useAppSelector(state => state.episode);
   const navigate = useNavigate();
   const [copied, setCopied] = React.useState(false);
 
@@ -46,10 +47,13 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        title={episodeData?.episode}
-        subheader={episodeData?.air_date}
-      />
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <CardHeader
+          title={episodeData?.episode}
+          subheader={episodeData?.air_date}
+        />
+        <WatchedButton episodeData={episodeData} watched={watched} />
+      </Box>
       <OndemandVideoIcon sx={{ fontSize: 320 }} />
       <CardContent>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
