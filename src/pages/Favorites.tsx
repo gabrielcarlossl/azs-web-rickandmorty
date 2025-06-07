@@ -81,8 +81,8 @@ const Favorites = () => {
                     <ListItemText
                       primary={`${ep.episode} - ${ep.name}`}
                       secondary={
-                        <Box
-                        sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}
+                        <Box component={'span'}
+                          style={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}
                         >
                           <Typography component={'span'}>
                             Data de exibição: {ep.air_date}
