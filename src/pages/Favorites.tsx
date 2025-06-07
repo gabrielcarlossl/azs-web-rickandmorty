@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 // Components
 import {
   Box,
@@ -21,6 +22,7 @@ import BackButton from '../components/button/BackButton'
 import AddFavoriteButton from '../components/button/AddFavoriteButton'
 import WatchedButton from '../components/button/WatchedButton'
 import CharacterCard from '../components/card/CharacterCard';
+import PageTitle from '../components/text/PageTitle';
 
 // Redux
 import { useAppSelector } from '../store/configureStore'
@@ -48,13 +50,13 @@ const Favorites = () => {
   return (
     <Box p={4}>
       <BackButton />
-      <Typography
-        variant="h4"
+      <PageTitle
+        variant="h2"
         my={3}
         gutterBottom
       >
         Episódios Favoritos
-      </Typography>
+      </PageTitle>
       {
         favorites.length === 0 ? (
           <Typography>
