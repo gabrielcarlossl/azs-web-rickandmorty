@@ -34,6 +34,9 @@ Lista de personagens com:
 
 - Buscar episódios por nome
 
+  ![botões de ação](https://github.com/user-attachments/assets/bb58f892-5320-450c-be34-0c0e6e197d7b)
+
+
 ### Tecnologias
 - ReactJS
 
