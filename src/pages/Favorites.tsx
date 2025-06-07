@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 // Assets
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 // Components
 import {
   Box,
@@ -14,6 +14,7 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  Tooltip,
   Typography
 } from '@mui/material'
 import BackButton from '../components/button/BackButton'
@@ -79,14 +80,22 @@ const Favorites = () => {
                     }
                   >
                     <ListItemText
-                      primary={`${ep.episode} - ${ep.name}`}
+                      primary={
+                        <Typography fontWeight={500} component={'span'}>
+                          {`${ep.episode} - ${ep.name}`}
+                        </Typography>
+                      }
                       secondary={
                         <Box component={'span'}
-                          style={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}
+                          style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', gap: 5 }}
                         >
-                          <Typography component={'span'}>
-                            Data de exibição: {ep.air_date}
+                          <Typography component={'span'} display={'flex'} alignItems={'center'}>
+                            <Tooltip title='Data de exibição'>
+                              <CalendarMonthIcon />
+                            </Tooltip>
+                            {ep.air_date}
                           </Typography>
+
                           <Typography component={'span'}>
                             • {ep.characters.length} personagens
                           </Typography>
