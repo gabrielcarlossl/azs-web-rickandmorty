@@ -1,13 +1,14 @@
-import { Button } from '@mui/material';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import KeyboardArrowLeftRoundedIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import ButtonStyled from './style/ButtonStyled';
 
 type BackButtonProps = {
   text?: string;
 }
 
 const BackButton: React.FC<BackButtonProps> = ({
-  text= 'Voltar'
+  text = 'Voltar'
 }) => {
   const navigate = useNavigate();
 
@@ -16,9 +17,12 @@ const BackButton: React.FC<BackButtonProps> = ({
   };
 
   return (
-    <Button onClick={handleBack} variant="outlined" color="primary">
+    <ButtonStyled
+      onClick={handleBack}
+    >
+      <KeyboardArrowLeftRoundedIcon />
       {text}
-    </Button>
+    </ButtonStyled>
   )
 }
 

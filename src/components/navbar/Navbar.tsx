@@ -11,8 +11,8 @@ import { Sidebar } from '../sidebar/Sidebar';
 import {
   Box,
   Tooltip,
-  Typography,
-  IconButton
+  IconButton,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -40,7 +40,7 @@ const MenuBars = styled(Link)({
 });
 
 const NavMenu = styled('nav')<{ active: boolean }>(({ active }) => ({
-  backgroundColor: '#6A1B9A',
+  backgroundColor: '#21242D',
   width: 250,
   height: '100vh',
   display: 'flex',
@@ -61,7 +61,7 @@ const NavMenuItems = styled('ul')({
 });
 
 const NavbarToggle = styled('li')({
-  backgroundColor: '#6A1B9A',
+  backgroundColor: '#21242D',
   width: '100%',
   height: 80,
   display: 'flex',
@@ -77,7 +77,7 @@ const NavText = styled('li')({
   listStyle: 'none',
   '& a': {
     textDecoration: 'none',
-    color: '#00FF9C',
+    color: '#F9F9F9',
     fontSize: 24,
     width: '95%',
     height: '100%',
@@ -94,9 +94,10 @@ const NavText = styled('li')({
 });
 
 const VersionSpan = styled('span')({
-  color: '#FFEB3B',
-  fontWeight: 600,
-  marginLeft: 16,
+  textAlign: 'center',
+  color: '#00B9AE',
+  fontWeight: 400,
+  fontSize: 14,
 });
 
 const Navbar = () => {
@@ -128,7 +129,7 @@ const Navbar = () => {
       <NavbarContainer>
         <MenuBars to="#">
           <Tooltip title="Menu" placement="right">
-            <IconButton onClick={showSidebar} sx={{ color: '#FFEB3B' }}>
+            <IconButton onClick={showSidebar} sx={{ color: '#00B9AE' }}>
               <MenuIcon sx={{ fontSize: 40 }} />
             </IconButton>
           </Tooltip>
@@ -140,37 +141,52 @@ const Navbar = () => {
         </Box>
       </NavbarContainer>
       <NavMenu ref={navRef} active={sidebar}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-between' }}>
           <NavMenuItems onClick={showSidebar}>
             <NavbarToggle>
               <MenuBars to="#">
                 <Tooltip title="Fechar Menu" placement="right">
-                  <IconButton sx={{ color: '#FFEB3B' }}>
+                  <IconButton sx={{ color: '#00B9AE' }}>
                     <MenuOpenIcon sx={{ fontSize: 40 }} />
                   </IconButton>
                 </Tooltip>
               </MenuBars>
             </NavbarToggle>
-            {Sidebar.map((item, index) => (
-              <NavText key={index} className={item.cName}>
-                <Link
-                  style={path === item.path ? { backgroundColor: '#212121' } : {}}
-                  to={item.path}
-                >
-                  {item.icon}
-                  <span style={{ marginLeft: 16 }}>{item.title}</span>
-                </Link>
-              </NavText>
-            ))}
+            {
+              Sidebar.map((item, index) => (
+                <NavText key={index} className={item.cName}>
+                  <Link
+                    style={
+                      path === item.path ? { backgroundColor: '#3D4345', color: '#00B9AE' } : {}
+
+                    }
+                    to={item.path}
+                  >
+                    {item.icon}
+                    <Typography
+                      component='span'
+                      ml={2}
+                      fontWeight={600}
+                      fontSize={22}
+                      sx={
+                        path === item.path ? { color: '#00B9AE' } : { color: '#F9F9F9' }
+                      }
+                    >
+                      {item.title}
+                    </Typography>
+                  </Link>
+                </NavText>
+              ))
+            }
           </NavMenuItems>
           {latestTag ? (
             <VersionSpan>
               Versão: {latestTag}
             </VersionSpan>
           ) : (
-            <Typography textAlign='center' color='#FFEB3B'>
+            <VersionSpan>
               Carregando versão...
-            </Typography>
+            </VersionSpan>
           )}
         </Box>
       </NavMenu>

@@ -1,6 +1,7 @@
 import { Avatar, Box, Paper, Typography } from '@mui/material'
 import React from 'react'
 import type { CharacterDetails } from '../../store/episodes/types'
+import { translateSpecies, translateStatus } from '../../utils/functions'
 
 type CharacterCardProps = {
   characters: CharacterDetails
@@ -15,7 +16,8 @@ characters
         p: 2,
         display: 'flex',
         alignItems: 'center',
-        gap: 2
+        gap: 2,
+        background: '#16181E'
       }}
     >
       <Avatar
@@ -24,9 +26,9 @@ characters
         sx={{ width: 64, height: 64 }}
       />
       <Box>
-        <Typography variant="subtitle1">{characters.name}</Typography>
-        <Typography variant="body2">Espécie: {characters.species}</Typography>
-        <Typography variant="body2">Status: {characters.status}</Typography>
+        <Typography variant="subtitle1" fontWeight={600}>{characters.name}</Typography>
+        <Typography variant="body2">Espécie: {translateSpecies(characters.species)}</Typography>
+        <Typography variant="body2">Status: {translateStatus(characters.status)}</Typography>
       </Box>
     </Paper>
   )

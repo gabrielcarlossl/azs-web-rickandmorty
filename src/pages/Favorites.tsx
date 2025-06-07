@@ -4,12 +4,13 @@ import React, { useEffect } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 // Components
 import {
   Box,
   Collapse,
   Grid,
-  LinearProgress,
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -21,12 +22,36 @@ import BackButton from '../components/button/BackButton'
 import AddFavoriteButton from '../components/button/AddFavoriteButton'
 import WatchedButton from '../components/button/WatchedButton'
 import CharacterCard from '../components/card/CharacterCard';
+import PageTitle from '../components/text/PageTitle';
 
 // Redux
 import { useAppSelector } from '../store/configureStore'
 import type { Episode } from '../store/episodes/types'
 import { useDispatch } from 'react-redux';
 import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
+import LinearProgressStyled from '../components/loading/style/LinearProgress';
+
+type ExpandIconButtonProps = {
+  expanded: boolean;
+  onClick: () => void;
+  tooltipExpand?: string;
+  tooltipCollapse?: string;
+  color?: string;
+};
+
+const ExpandIconButton: React.FC<ExpandIconButtonProps> = ({
+  expanded,
+  onClick,
+  tooltipExpand = 'Expandir detalhes',
+  tooltipCollapse = 'Recolher detalhes',
+  color = '#00B9AE'
+}) => (
+  <Tooltip title={expanded ? tooltipCollapse : tooltipExpand}>
+    <IconButton onClick={onClick} sx={{ color }}>
+      {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+    </IconButton>
+  </Tooltip>
+);
 
 const Favorites = () => {
   const dispatch = useDispatch();
@@ -48,26 +73,24 @@ const Favorites = () => {
   return (
     <Box p={4}>
       <BackButton />
-      <Typography
-        variant="h4"
+      <PageTitle
+        variant="h2"
         my={3}
         gutterBottom
       >
         Episódios Favoritos
-      </Typography>
+      </PageTitle>
       {
         favorites.length === 0 ? (
           <Typography>
             Nenhum episódio favoritado.
           </Typography>
         ) : (
-          <List component={Paper} elevation={3}>
+          <List component={Paper} elevation={3} sx={{ backgroundColor: '#43454A' }}>
             {
               favorites.map((ep: Episode) => (
                 <Box
                   key={ep.id}
-                  onClick={() => handleExpandClick(ep.id)}
-                  sx={{ cursor: 'pointer' }}
                 >
                   <ListItem
                     divider
@@ -75,11 +98,18 @@ const Favorites = () => {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <AddFavoriteButton episodeData={ep} favorites={favorites} />
                         <WatchedButton episodeData={ep} watched={watched} />
-                        {expandedId === ep.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        {
+                          <ExpandIconButton
+                            expanded={expandedId === ep.id}
+                            onClick={() => handleExpandClick(ep.id)}
+                          />
+                        }
                       </Box>
                     }
                   >
                     <ListItemText
+                      onClick={() => handleExpandClick(ep.id)}
+                      sx={{ cursor: 'pointer' }}
                       primary={
                         <Typography fontWeight={500} component={'span'}>
                           {`${ep.episode} - ${ep.name}`}
@@ -106,7 +136,7 @@ const Favorites = () => {
                   <Collapse in={expandedId === ep.id} timeout="auto" unmountOnExit>
                     <Box sx={{ p: 2 }}>
                       {
-                        episodeDetails?.loading ? <LinearProgress /> :
+                        episodeDetails?.loading ? <LinearProgressStyled /> :
                           <Grid container spacing={2}>
                             {
                               episodeDetails?.data?.characters.map((char) => {

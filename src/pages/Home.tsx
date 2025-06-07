@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 // Assets
 import ClearIcon from '@mui/icons-material/Clear';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
 
 // Components
-import { Box, Button, IconButton, InputAdornment, Pagination, TextField, Typography } from '@mui/material'
+import { Badge, Box, IconButton, InputAdornment, Pagination, TextField, Tooltip, Typography } from '@mui/material'
 import EpisodeCard from '../components/card/EpisodeCard';
 import CardsLoading from '../components/loading/CardsLoading';
 
@@ -13,10 +15,12 @@ import { useDispatch } from 'react-redux';
 import { fetchEpisodesRequest } from '../store/episodes/actions';
 import { useAppSelector } from '../store/configureStore';
 import type { Episode } from '../store/episodes/types';
+import PageTitle from '../components/text/PageTitle';
+import ButtonStyled from '../components/button/style/ButtonStyled';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { data, loading, error } = useAppSelector(state => state.episodes);
+  const { data, loading, error, watched } = useAppSelector(state => state.episodes);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');
@@ -56,12 +60,39 @@ const Home = () => {
         mb: 4,
         flexWrap: 'wrap',
       }}>
-        <Typography variant="h2" mb={0} gutterBottom>
-          Lista de Episódios
-        </Typography>
+        <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          '.MuiBadge-badge': {
+            background: '#00B9AE'
+          }
+        }}
+        >
+          <PageTitle variant="h2" mb={0} gutterBottom>
+            Lista de Episódios
+          </PageTitle>
+          <Tooltip title="Episódios vistos">
+            <Badge badgeContent={watched?.length ?? 0} color="primary">
+              <LiveTvIcon sx={{ fontSize: '30px' }} />
+            </Badge>
+          </Tooltip>
+        </Box>
 
         <Box display="flex" my={2} gap={2}>
           <TextField
+          sx={{
+            background: '#3D4345',
+            borderRadius: '10px',
+            '.MuiFormLabel-root': {
+              color: '#F9F9F9 !important',
+            },
+            'input': {
+              color: '#F9F9F9 !important',
+            },
+            outline: 'none'
+
+          }}
             label="Buscar por nome"
             variant="outlined"
             fullWidth
@@ -86,12 +117,14 @@ const Home = () => {
               ),
             }}
           />
-          <Button
-            disabled={loading}
-            variant="contained"
-            onClick={handleSearch}>
-            Buscar
-          </Button>
+          <Tooltip title="Buscar">
+            <ButtonStyled
+              disabled={loading}
+              variant="contained"
+              onClick={handleSearch}>
+              <SearchRoundedIcon />
+            </ButtonStyled>
+          </Tooltip>
         </Box>
       </Box>
 
@@ -146,8 +179,17 @@ const Home = () => {
                     }
                   </Box>
               }
-              <Box mt={3} display="flex" justifyContent="center">
+              <Box
+                mt={3} display="flex" justifyContent="center">
                 <Pagination
+                  sx={{
+                    '.MuiPaginationItem-root': {
+                      color: '#F9F9F9 !important',
+                    },
+                    '.Mui-selected':{
+                      background: '#00B9AE !important',
+                    }
+                  }}
                   count={data?.info.pages}
                   page={currentPage}
                   onChange={handlePageChange}
