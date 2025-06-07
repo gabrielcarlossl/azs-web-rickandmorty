@@ -18,6 +18,7 @@ import CharacterCard from '../components/card/CharacterCard';
 import { useAppSelector } from '../store/configureStore';
 import { useDispatch } from 'react-redux';
 import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
+import PageTitle from '../components/text/PageTitle';
 
 
 const EpisodeDetails = () => {
@@ -33,11 +34,11 @@ const EpisodeDetails = () => {
   }, [dispatch, id]);
 
   return (
-    <Box p={4}>
+    <Box p={4} display='flex' flexDirection='column' gap={2}>
       <BackButton />
-      <Typography variant="h3" gutterBottom>
+      <PageTitle variant="h3" gutterBottom>
         Detalhes do Episódio
-      </Typography>
+      </PageTitle>
       {
         episodeDetails?.loading ? (<LinearProgress />) : (
           <Paper sx={{ p: 3, mb: 4, mt: 2 }}>
