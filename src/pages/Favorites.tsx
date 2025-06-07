@@ -10,7 +10,7 @@ import {
   Box,
   Collapse,
   Grid,
-  LinearProgress,
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -29,6 +29,29 @@ import { useAppSelector } from '../store/configureStore'
 import type { Episode } from '../store/episodes/types'
 import { useDispatch } from 'react-redux';
 import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
+import LinearProgressStyled from '../components/loading/style/LinearProgress';
+
+type ExpandIconButtonProps = {
+  expanded: boolean;
+  onClick: () => void;
+  tooltipExpand?: string;
+  tooltipCollapse?: string;
+  color?: string;
+};
+
+const ExpandIconButton: React.FC<ExpandIconButtonProps> = ({
+  expanded,
+  onClick,
+  tooltipExpand = 'Expandir detalhes',
+  tooltipCollapse = 'Recolher detalhes',
+  color = '#00B9AE'
+}) => (
+  <Tooltip title={expanded ? tooltipCollapse : tooltipExpand}>
+    <IconButton onClick={onClick} sx={{ color }}>
+      {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+    </IconButton>
+  </Tooltip>
+);
 
 const Favorites = () => {
   const dispatch = useDispatch();
@@ -63,13 +86,11 @@ const Favorites = () => {
             Nenhum episódio favoritado.
           </Typography>
         ) : (
-          <List component={Paper} elevation={3}>
+          <List component={Paper} elevation={3} sx={{ backgroundColor: '#43454A' }}>
             {
               favorites.map((ep: Episode) => (
                 <Box
                   key={ep.id}
-                  onClick={() => handleExpandClick(ep.id)}
-                  sx={{ cursor: 'pointer' }}
                 >
                   <ListItem
                     divider
@@ -77,11 +98,18 @@ const Favorites = () => {
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <AddFavoriteButton episodeData={ep} favorites={favorites} />
                         <WatchedButton episodeData={ep} watched={watched} />
-                        {expandedId === ep.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        {
+                          <ExpandIconButton
+                            expanded={expandedId === ep.id}
+                            onClick={() => handleExpandClick(ep.id)}
+                          />
+                        }
                       </Box>
                     }
                   >
                     <ListItemText
+                      onClick={() => handleExpandClick(ep.id)}
+                      sx={{ cursor: 'pointer' }}
                       primary={
                         <Typography fontWeight={500} component={'span'}>
                           {`${ep.episode} - ${ep.name}`}
@@ -108,7 +136,7 @@ const Favorites = () => {
                   <Collapse in={expandedId === ep.id} timeout="auto" unmountOnExit>
                     <Box sx={{ p: 2 }}>
                       {
-                        episodeDetails?.loading ? <LinearProgress /> :
+                        episodeDetails?.loading ? <LinearProgressStyled /> :
                           <Grid container spacing={2}>
                             {
                               episodeDetails?.data?.characters.map((char) => {
