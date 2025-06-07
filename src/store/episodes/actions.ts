@@ -9,7 +9,9 @@ import {
   FETCH_EPISODE_BY_ID_REQUEST,
   FETCH_EPISODE_BY_ID_SUCCESS,
   FETCH_EPISODE_BY_ID_FAILURE,
-  type EpisodeDetails
+  type EpisodeDetails,
+  ADD_WATCHED_EPISODE,
+  REMOVE_WATCHED_EPISODE
 } from './types';
 
 // Action Creators
@@ -54,4 +56,14 @@ export const fetchEpisodeByIdSuccess = (data: EpisodeDetails) => ({
 export const fetchEpisodeByIdFailure = (error: string) => ({
   type: FETCH_EPISODE_BY_ID_FAILURE,
   payload: error
+});
+
+export const addWatchedEpisode = (episode: Episode) => ({
+  type: ADD_WATCHED_EPISODE,
+  payload: episode
+});
+
+export const removeWatchedEpisode = (id: string) => ({
+  type: REMOVE_WATCHED_EPISODE,
+  payload: id
 });

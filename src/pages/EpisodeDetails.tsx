@@ -19,10 +19,11 @@ import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
 
 // Utils
 import AddFavoriteButton from '../components/button/AddFavoriteButton';
+import WatchedButton from '../components/button/WatchedButton';
 
 const EpisodeDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const { episodeDetails, favorites } = useAppSelector(state => state.episode);
+  const { episodeDetails, favorites, watched } = useAppSelector(state => state.episode);
   const episodeData = episodeDetails && episodeDetails.data
   const dispatch = useDispatch();
 
@@ -55,7 +56,11 @@ const EpisodeDetails = () => {
                 </Typography>
                 {
                   episodeData && (
-                    <AddFavoriteButton episodeData={episodeData} favorites={favorites} />
+                    <React.Fragment>
+                      <AddFavoriteButton episodeData={episodeData} favorites={favorites} />
+                      <WatchedButton
+                        episodeData={episodeData} watched={watched} />
+                    </React.Fragment>
                   )
                 }
               </Box>

@@ -7,6 +7,8 @@ import {
   FETCH_EPISODE_BY_ID_REQUEST,
   FETCH_EPISODE_BY_ID_SUCCESS,
   FETCH_EPISODE_BY_ID_FAILURE,
+  ADD_WATCHED_EPISODE,
+  REMOVE_WATCHED_EPISODE,
   type EpisodeByIdActions,
   type EpisodesActions,
   type Episode,
@@ -18,6 +20,7 @@ const initialState: EpisodesState = {
   loading: false,
   error: null,
   favorites: [],
+  watched: [],
   episodeDetails: {
     data: null,
     loading: false,
@@ -84,6 +87,20 @@ const EpisodesReducer = (state = initialState, action: EpisodesActions | Episode
           loading: false,
           error: action.payload
         }
+      };
+    case ADD_WATCHED_EPISODE:
+      if (state?.watched?.find((ep: Episode) => ep.id === action.payload.id)) {
+        return state;
+      }
+      return {
+        ...state,
+        watched: [...state.watched, action.payload]
+      };
+
+    case REMOVE_WATCHED_EPISODE:
+      return {
+        ...state,
+        watched: state.watched.filter((ep: Episode) => ep.id !== action.payload)
       };
     default:
       return state;
