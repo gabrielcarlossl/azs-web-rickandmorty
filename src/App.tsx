@@ -6,6 +6,7 @@ import Favorites from './pages/Favorites'
 import React from 'react'
 import EpisodeDetails from './pages/EpisodeDetails'
 import { Box } from '@mui/material'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Navbar />
         <Box pt='82px'>
           <Routes>
+            <Route path='*' element={<NotFoundPage />} />
             <Route path='/' element={<Home />} />
             <Route path='/favorite-episodes' element={<Favorites />} />
             <Route path='/details/:id' element={<EpisodeDetails />} />
