@@ -51,3 +51,4 @@ Lista de personagens com:
 - Criação de tela de login utilizando autenticação com JSON Server API
 - Adição de Comentários na exibição de detalhes de episódio
 - Adição de avaliação de episódio
+- Adicionar mais testes no redux e testes de componentes

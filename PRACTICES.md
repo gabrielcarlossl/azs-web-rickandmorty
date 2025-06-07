@@ -156,3 +156,27 @@ Este documento reúne as melhores práticas adotadas neste projeto, baseando-se 
 - Documente exemplos de uso para novos componentes reutilizáveis.
 
 ---
+
+## 11. Testes
+
+- Todo novo reducer, action ou função utilitária deve ter testes automatizados.
+- Utilize o [Vitest](https://vitest.dev/) para testes unitários e de integração.
+- Os arquivos de teste devem seguir o padrão `<nome-do-arquivo>.test.ts`.
+- Garanta cobertura mínima para os principais fluxos do Redux (reducers, actions) e componentes reutilizáveis.
+- Exemplo de teste básico para reducer:
+  ```ts
+  import { describe, it, expect } from 'vitest'
+  import EpisodesReducer from './reducer'
+  import { addFavoriteEpisode } from './actions'
+
+  describe('EpisodesReducer', () => {
+    it('deve adicionar episódio aos favoritos', () => {
+      const initialState = { favorites: [], watched: [], ... }
+      const mockEpisode = { id: '1', ... }
+      const nextState = EpisodesReducer(initialState, addFavoriteEpisode(mockEpisode))
+      expect(nextState.favorites).toContainEqual(mockEpisode)
+    })
+  })
+  ```
+
+---
