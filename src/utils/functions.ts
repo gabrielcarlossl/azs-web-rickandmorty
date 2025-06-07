@@ -1,4 +1,4 @@
-import { addFavoriteEpisode, removeFavoriteEpisode } from '../store/episodes/actions';
+import { addFavoriteEpisode, removeFavoriteEpisode, addWatchedEpisode, removeWatchedEpisode } from '../store/episodes/actions';
 import type { Episode } from '../store/episodes/types';
 import type { Dispatch } from 'redux';
 
@@ -11,3 +11,13 @@ export function handleFavorite(ep: Episode, favorites: Episode[], dispatch: Disp
     dispatch(addFavoriteEpisode(ep));
   }
 };
+
+export const isWatched = (id: string | undefined, watched: Episode[]) => watched?.some((ep: Episode) => ep.id === id);
+
+export function handleWatched(ep: Episode, watched: Episode[], dispatch: Dispatch) {
+  if (isWatched(ep.id, watched)) {
+    dispatch(removeWatchedEpisode(ep.id));
+  } else {
+    dispatch(addWatchedEpisode(ep));
+  }
+}
