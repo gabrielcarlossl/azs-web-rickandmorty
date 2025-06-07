@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 // Assets
 import ShareIcon from '@mui/icons-material/Share';
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import RickMortyTvImage from '../../assets/images/rick-and-morty-tv.png'
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 
 // Components
 import Card from '@mui/material/Card';
@@ -12,7 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { Box, Button, Tooltip } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 
 // Redux
 import { useAppSelector } from '../../store/configureStore';
@@ -21,6 +22,7 @@ import type { Episode } from '../../store/episodes/types';
 // Utils
 import AddFavoriteButton from '../button/AddFavoriteButton';
 import WatchedButton from '../button/WatchedButton';
+import ButtonStyled from '../button/style/ButtonStyled';
 
 type EpisodeCardProps = {
   episodeData: Episode;
@@ -46,17 +48,39 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        background: 'rgba(249, 249, 249, 0.8)',
+        borderRadius: '18px',
+        padding: '18px 8px 10px 8px'
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
         <CardHeader
-          title={episodeData?.episode}
+          title={
+            <Typography
+              fontSize='22px'
+              color='#16181E'
+              fontWeight={800}
+              component='span'
+            >
+              {episodeData?.episode}
+            </Typography>
+          }
           subheader={episodeData?.air_date}
         />
         <WatchedButton episodeData={episodeData} watched={watched} />
       </Box>
-      <OndemandVideoIcon sx={{ fontSize: 320 }} />
+      <img src={RickMortyTvImage} alt="Rick and Morty asssitindo tv" width={330} />
       <CardContent>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '18px', fontWeight: 600 }}>
           {episodeData?.name}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -67,17 +91,19 @@ const EpisodeCard: React.FC<EpisodeCardProps> = ({
         <AddFavoriteButton episodeData={episodeData} favorites={favorites} />
         <Tooltip title={copied ? "Link copiado!" : "Compartilhar"}>
           <IconButton aria-label="share" onClick={handleShare}>
-            <ShareIcon />
+            <ShareIcon sx={{ color: '#00B9AE' }} />
           </IconButton>
         </Tooltip>
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleSeeMore}
-          aria-label="show more"
-        >
-          Ver mais
-        </Button>
+        <Tooltip title="Ver detalhes do episódio">
+          <ButtonStyled
+
+            onClick={handleSeeMore}
+            aria-label="show more"
+          >
+            Ver mais
+            <KeyboardArrowRightRoundedIcon sx={{ marginLeft: '4px' }} />
+          </ButtonStyled>
+        </Tooltip>
       </CardActions>
     </Card>
   )
