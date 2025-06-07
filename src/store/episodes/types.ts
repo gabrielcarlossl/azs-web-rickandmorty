@@ -19,24 +19,6 @@ export interface FetchEpisodesPayload {
   page: number;
 }
 
-export interface CharacterDetails {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  image: string;
-}
-
-export interface EpisodeDetails {
-  id: string;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: CharacterDetails[];
-  loading: false,
-  error: null
-}
-
 export interface FetchEpisodeByIdRequestAction {
   type: typeof FETCH_EPISODE_BY_ID_REQUEST;
   payload: { id: string };
@@ -81,6 +63,24 @@ export interface Episode {
   name: string;
   air_date: string;
   characters: { id: string }[];
+}
+
+export interface CharacterDetails {
+  id: string;
+  name: string;
+  status: string;
+  species: string;
+  image: string;
+}
+
+export interface EpisodeDetails {
+  id: string;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: CharacterDetails[];
+  loading: false,
+  error: null
 }
 
 export interface EpisodesResponse {

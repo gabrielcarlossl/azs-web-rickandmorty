@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 
 // Assets
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,20 +8,102 @@ import logo from '../../assets/images/logo.png'
 // Components
 import { Link } from 'react-router-dom';
 import { Sidebar } from '../sidebar/Sidebar';
-import { Box, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Tooltip,
+  Typography,
+  IconButton
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-// Hooks
+// Utils
 import { useLatestGithubTag } from '../../hooks/useLatestGitHubTag';
 
-// Styles
-import './styles/Navbar.css';
+
+const NavbarContainer = styled('div')(() => ({
+  backgroundColor: '#212121',
+  height: 80,
+  display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'center',
+  position: 'fixed',
+  width: '100%',
+  zIndex: 2000,
+}));
+
+const MenuBars = styled(Link)({
+  marginLeft: '2rem',
+  fontSize: '2rem',
+  background: 'none',
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const NavMenu = styled('nav')<{ active: boolean }>(({ active }) => ({
+  backgroundColor: '#6A1B9A',
+  width: 250,
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  position: 'fixed',
+  top: 0,
+  left: active ? 0 : '-100%',
+  transition: active ? 'left 350ms' : 'left 850ms',
+  zIndex: 2000,
+  flexDirection: 'column',
+}));
+
+const NavMenuItems = styled('ul')({
+  width: '100%',
+  padding: 0,
+  margin: 0,
+  listStyle: 'none',
+});
+
+const NavbarToggle = styled('li')({
+  backgroundColor: '#6A1B9A',
+  width: '100%',
+  height: 80,
+  display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'center',
+});
+
+const NavText = styled('li')({
+  display: 'flex',
+  justifyContent: 'start',
+  alignItems: 'center',
+  padding: '8px 0px 8px 16px',
+  listStyle: 'none',
+  '& a': {
+    textDecoration: 'none',
+    color: '#00FF9C',
+    fontSize: 24,
+    width: '95%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '6px 16px',
+    borderRadius: 4,
+    fontWeight: 600,
+    transition: 'background 0.2s',
+    '&:hover': {
+      backgroundColor: '#212121',
+    },
+  },
+});
+
+const VersionSpan = styled('span')({
+  color: '#FFEB3B',
+  fontWeight: 600,
+  marginLeft: 16,
+});
 
 const Navbar = () => {
-  const [sidebar, setSidebar] = React.useState(false);
+  const [sidebar, setSidebar] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const showSidebar = () => setSidebar(!sidebar);
   const latestTag = useLatestGithubTag('gabrielcarlossl', 'azs-web-rickandmorty');
-
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -43,59 +125,55 @@ const Navbar = () => {
 
   return (
     <React.Fragment>
-      <div className="navbar">
-        <Link to="#" className='menu-bars'>
+      <NavbarContainer>
+        <MenuBars to="#">
           <Tooltip title="Menu" placement="right">
-            <MenuIcon sx={{ color: '#FFEB3B', fontSize: 40 }} onClick={showSidebar} />
+            <IconButton onClick={showSidebar} sx={{ color: '#FFEB3B' }}>
+              <MenuIcon sx={{ fontSize: 40 }} />
+            </IconButton>
           </Tooltip>
-        </Link>
+        </MenuBars>
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <Link to="/" className='logo'>
             <img src={logo} alt="Logo" width={200} />
           </Link>
         </Box>
-      </div>
-      <nav
-        ref={navRef}
-        className={sidebar ? 'nav-menu active' : 'nav-menu'}
-      >
-        <ul className='nav-menu-items' onClick={showSidebar}>
-          <li className='navbar-toggle'>
-            <Link to="#" className='menu-bars'>
-              <Tooltip title="Fechar Menu" placement="right">
-                <MenuOpenIcon sx={{ color: '#FFEB3B', fontSize: 40 }} />
-              </Tooltip>
-            </Link>
-          </li>
-          {
-            Sidebar.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link
-                    style={path === item.path ? { backgroundColor: '#212121' } : {}}
-                    to={item.path}
-                  >
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })
-          }
-        </ul>
-        {
-          latestTag ? (
-            <span style={{ color: '#FFEB3B', fontWeight: 600, marginLeft: 16 }}>
+      </NavbarContainer>
+      <NavMenu ref={navRef} active={sidebar}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+          <NavMenuItems onClick={showSidebar}>
+            <NavbarToggle>
+              <MenuBars to="#">
+                <Tooltip title="Fechar Menu" placement="right">
+                  <IconButton sx={{ color: '#FFEB3B' }}>
+                    <MenuOpenIcon sx={{ fontSize: 40 }} />
+                  </IconButton>
+                </Tooltip>
+              </MenuBars>
+            </NavbarToggle>
+            {Sidebar.map((item, index) => (
+              <NavText key={index} className={item.cName}>
+                <Link
+                  style={path === item.path ? { backgroundColor: '#212121' } : {}}
+                  to={item.path}
+                >
+                  {item.icon}
+                  <span style={{ marginLeft: 16 }}>{item.title}</span>
+                </Link>
+              </NavText>
+            ))}
+          </NavMenuItems>
+          {latestTag ? (
+            <VersionSpan>
               Versão: {latestTag}
-            </span>
-          ) : <Typography
-            textAlign='center'
-            color='#FFEB3B'
-          >
-            Carregando versão...
-          </Typography>
-        }
-      </nav>
+            </VersionSpan>
+          ) : (
+            <Typography textAlign='center' color='#FFEB3B'>
+              Carregando versão...
+            </Typography>
+          )}
+        </Box>
+      </NavMenu>
     </React.Fragment>
   )
 }
