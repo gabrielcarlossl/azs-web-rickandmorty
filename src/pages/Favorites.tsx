@@ -29,7 +29,7 @@ import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
 
 const Favorites = () => {
   const dispatch = useDispatch();
-  const { favorites, watched, episodeDetails } = useAppSelector(state => state.episode)
+  const { favorites, watched, episodeDetails } = useAppSelector(state => state.episodes)
   const [expandedId, setExpandedId] = React.useState<string | null>(null);
   const [epId, setEpId] = React.useState<string>('');
 

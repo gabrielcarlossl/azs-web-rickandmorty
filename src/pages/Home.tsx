@@ -16,7 +16,7 @@ import type { Episode } from '../store/episodes/types';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { data, loading, error } = useAppSelector(state => state.episode);
+  const { data, loading, error } = useAppSelector(state => state.episodes);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
   const [query, setQuery] = useState('');

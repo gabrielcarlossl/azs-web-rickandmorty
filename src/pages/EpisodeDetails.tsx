@@ -22,7 +22,7 @@ import { fetchEpisodeByIdRequest } from '../store/episodes/actions';
 
 const EpisodeDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const { episodeDetails, favorites, watched } = useAppSelector(state => state.episode);
+  const { episodeDetails, favorites, watched } = useAppSelector(state => state.episodes);
   const episodeData = episodeDetails && episodeDetails.data
   const dispatch = useDispatch();
 

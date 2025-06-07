@@ -14,7 +14,7 @@ export function * rootSaga () {
 }
 
 export const appReducer = combineReducers({
-  episode: EpisodesReducer
+  episodes: EpisodesReducer
 })
 
 const rootReducer = (state: any, action: any) => {

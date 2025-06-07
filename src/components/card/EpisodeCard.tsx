@@ -29,7 +29,7 @@ type EpisodeCardProps = {
 const EpisodeCard: React.FC<EpisodeCardProps> = ({
   episodeData
 }) => {
-  const { favorites, watched } = useAppSelector(state => state.episode);
+  const { favorites, watched } = useAppSelector(state => state.episodes);
   const navigate = useNavigate();
   const [copied, setCopied] = React.useState(false);
 
