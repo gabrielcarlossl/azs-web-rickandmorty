@@ -55,3 +55,4 @@ Lista de personagens com:
 - Adição de Comentários na exibição de detalhes de episódio
 - Adição de avaliação de episódio
 - Adicionar mais testes no redux e testes de componentes
+- Adicionar tela de episódios assistidos (vistos)
