@@ -46,7 +46,7 @@ const EpisodeDetails = () => {
   const { episodeDetails, favorites, watched } = useAppSelector(state => state.episodes);
   const episodeData = episodeDetails && episodeDetails.data
   const dispatch = useDispatch();
-  console.log('episodeDetails', episodeDetails)
+
   useEffect(() => {
     if (id) {
       dispatch(fetchEpisodeByIdRequest(id));
