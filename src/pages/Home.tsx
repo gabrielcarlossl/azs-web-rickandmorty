@@ -17,18 +17,22 @@ import { useAppSelector } from '../store/configureStore';
 import type { Episode } from '../store/episodes/types';
 import PageTitle from '../components/text/PageTitle';
 import ButtonStyled from '../components/button/style/ButtonStyled';
+import { useScrollToTopOnChange } from '../hooks/useScrollToTop';
 
 const Home = () => {
   const dispatch = useDispatch();
   const { data, loading, error, watched } = useAppSelector(state => state.episodes);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [searchNotFound, setSearchNotFound] = useState<string>('');
   const [query, setQuery] = useState('');
   const emptySearchList = data?.results.length === 0
-
+  
   useEffect(() => {
     dispatch(fetchEpisodesRequest(currentPage, query));
   }, [dispatch, currentPage, query]);
+
+  useScrollToTopOnChange(currentPage);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
@@ -43,12 +47,15 @@ const Home = () => {
   const handleSearch = () => {
     setCurrentPage(1);
     setQuery(search);
+    setSearchNotFound(search);
+
   };
 
   const handleClear = () => {
     setSearch('');
     setQuery('');
     setCurrentPage(1);
+    setSearchNotFound('');
   };
 
   return (
@@ -81,18 +88,18 @@ const Home = () => {
 
         <Box display="flex" my={2} gap={2}>
           <TextField
-          sx={{
-            background: '#3D4345',
-            borderRadius: '10px',
-            '.MuiFormLabel-root': {
-              color: '#F9F9F9 !important',
-            },
-            'input': {
-              color: '#F9F9F9 !important',
-            },
-            outline: 'none'
+            sx={{
+              background: '#3D4345',
+              borderRadius: '10px',
+              '.MuiFormLabel-root': {
+                color: '#F9F9F9 !important',
+              },
+              'input': {
+                color: '#F9F9F9 !important',
+              },
+              outline: 'none'
 
-          }}
+            }}
             label="Buscar por nome"
             variant="outlined"
             fullWidth
@@ -141,14 +148,14 @@ const Home = () => {
                       <Typography
                         component='span'
                         style={{
-                          color: '#1976d2',
+                          color: '#00B9AE',
                           fontWeight: 600,
                           marginLeft: 4,
                           fontStyle: 'italic',
                           fontSize: '20px',
                         }}
                       >
-                        {search}
+                        {searchNotFound}
                       </Typography>
                     </React.Fragment>
                   )
@@ -186,7 +193,7 @@ const Home = () => {
                     '.MuiPaginationItem-root': {
                       color: '#F9F9F9 !important',
                     },
-                    '.Mui-selected':{
+                    '.Mui-selected': {
                       background: '#00B9AE !important',
                     }
                   }}
