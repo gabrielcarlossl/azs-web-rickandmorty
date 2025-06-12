@@ -1,6 +1,20 @@
 # Rick and Morty Episodes Manager
 Aplicação Web desenvolvida em ReactJS para explorar e gerenciar todos os episódios da série Rick and Morty, utilizando a Rick and Morty API.
 
+## Como rodar localmente?
+
+Pré-requisitos:
+
+* NodeJS v20.18.1 +
+    - Instale através do [NVM - Node Version Manager](https://github.com/nvm-sh/nvm)
+      - Depois de instalar o nvm, run ```nvm install 20 ```, seguido por ```nvm use 20``` vai instalar o node 20 e usar o node 20
+      - O projeto roda nas versões mais atuais do NodeJS. O projeto foi testado e funciona com o node v20.18.1
+    - Veja as versões de node oficiais [Node.js official website](https://nodejs.org/en/download/releases/) ou rode o comando ```nvm list available ```
+* Após node instalado rode: ```npm install ``` e depois ```npm run dev ```
+* Acesse o projeto na porta: http://localhost:5173/
+* Para rodar testes use  ```npm run test ```
+  - Veja no [Package.json](https://github.com/gabrielcarlossl/azs-web-rickandmorty/blob/main/package.json) os scripst disponíveis.
+
 ## Funcionalidades
 Listagem de episódios com:
 
@@ -38,7 +52,7 @@ Lista de personagens com:
 
 
 ### Tecnologias
-- ReactJS
+- ReactJS com Typescript
 
 - React Router Dom
 
@@ -47,6 +61,10 @@ Lista de personagens com:
 - Material UI
 
 - Integração com a [Rick and Morty API](https://rickandmortyapi.com)
+
+- Vitest com React Testing Library
+
+- Husky: Pre push
 
 
 #### Melhorias
