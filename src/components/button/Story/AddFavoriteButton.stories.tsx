@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import AddFavoriteButton from '../AddFavoriteButton';
 import type { Episode } from '../../../store/episodes/types';
+import { Provider } from 'react-redux';
+import { store } from '../../../store/configureStore';
 
 
 const mockEpisode: Episode = {
@@ -18,6 +20,13 @@ const meta: Meta<typeof AddFavoriteButton> = {
     episodeData: mockEpisode,
     favorites: [],
   },
+  decorators: [
+    (Story) => (
+      <Provider store={store}>
+        <Story />
+      </Provider>
+    ),
+  ],
 };
 export default meta;
 
