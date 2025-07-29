@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import AddFavoriteButton from '../AddFavoriteButton';
 import type { Episode } from '../../../store/episodes/types';
 import { Provider } from 'react-redux';
