@@ -58,6 +58,8 @@ Lista de personagens com:
 
 - Redux Sagas
 
+- Storybook 
+
 - Material UI
 
 - Integração com a [Rick and Morty API](https://rickandmortyapi.com)
